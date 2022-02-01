@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "b0490efa-7d17-4f50-84d0-11af7cc669bc": {
+      "ProjectGuid": "b0490efa-7d17-4f50-84d0-11af7cc669bc",
+      "DisplayName": "Gen1-FE",
+      "ColorIndex": 0
+    }
+  },
+  "NextColorIndex": 1
+}
