@@ -22,7 +22,7 @@ public partial class _Default : System.Web.UI.Page
         }
         else
         {
-            TipoMenu = Request.QueryString["id"].ToString();
+            TipoMenu = Request.QueryString["id"];
         }
         TransformaXML();
     }
