@@ -28,6 +28,7 @@
     <![endif]-->
 				<script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>
 				<!-- jQuery -->
+				<script type="text/javascript" src="js/geolocalizacion.js"></script>
 
 			</head>
 			<body>
@@ -83,7 +84,7 @@
 						<xsl:call-template name="Contacto"></xsl:call-template>
 					</xsl:when>
 					<xsl:when test="$TipoMenu= 3">
-						<h1>Contenido de Play Room</h1>
+						<xsl:call-template name="playRoom"></xsl:call-template>
 					</xsl:when>
 					<xsl:otherwise>
 						<xsl:call-template name="Home"></xsl:call-template>
@@ -346,6 +347,7 @@
 			</div>
 		</div>
 	</xsl:template>
+
 	<xsl:template name="Carta">
 		<section class="tm-welcome-section">
 			<div class="container tm-position-relative">
@@ -451,6 +453,7 @@
 	</xsl:template>
 
 	<xsl:template name="Contacto">
+		<script src="//maps.googleapis.com/maps/api/js?key=AIzaSyCWeeateTaYGqsHhNcmoDfT7Us-vLDZVPs&amp;sensor=false&amp;language=en"></script>
 		<section class="tm-welcome-section">
 			<div class="container tm-position-relative">
 				<div class="tm-lights-container">
@@ -482,46 +485,46 @@
 					<h2 class="col-lg-12 margin-bottom-30">Formulario de reservacion</h2>
 					<form action="Contacto.aspx" method="post" class="tm-contact-form" oninput="total.value=contact_personas.valueAsNumber+contact_adicionales.valueAsNumber">
 						<div class="col-lg-6 col-md-6">
-							
+
 							<div class="form-group">
 								<labbel class="form-label">Nombre</labbel>
 								<input type="text" id="contact_name" name="contact_name" class="form-control" placeholder="Nombre" required="true" />
 							</div>
-							
+
 							<div class="form-group">
 								<labbel class="form-label">Correo</labbel>
 								<input type="email" id="contact_email" name="contact_email" class="form-control" placeholder="Correo electronico" required="true"/>
 							</div>
-							
+
 							<div class="form-group">
 								<labbel class="form-label">Número de personas</labbel>
 								<input type="number" id="contact_personas" name="contact_personas" class="form-control" required="true" max="8" min="1" value="1"/>
 							</div>
-							
+
 							<div class="form-group">
 								<labbel class="form-label">Personas adicionales</labbel>
 								<input type="number" id="contact_adicionales" name="contact_adicionales" class="form-control" max="4" min="0" value="0"/>
 							</div>
-							
+
 							<div class="form-group">
 								<labbel class="form-label">Fecha</labbel>
 								<input type="date" id="contact_fecha" name="contact_fecha" class="form-control" required="true" />
 							</div>
-							
+
 							<div class="form-group">
 								<labbel class="form-label">Hora</labbel>
 								<input type="time" id="contact_hora" name="contact_hora" class="form-control" required="true" max="19:00:00" min="08:00:00"/>
 							</div>
-							
+
 							<div class="form-group">
 								<labbel class="form-label">Total de personaes</labbel>
 								<output id="total" class="form-control">1</output>
 							</div>
-							
+
 							<div class="form-group">
 								<button class="tm-more-button" type="submit" name="submit">Hacer reservacion</button>
 							</div>
-							
+
 						</div>
 						<div class="col-lg-6 col-md-6">
 							<div id="google-map">
@@ -557,9 +560,73 @@
     var today = yyyy + '-' + mm + '-' + dd; //2022-01-03
     $("#contact_fecha").attr("min",today);
     $("#contact_fecha").val(today);
-    //getGeo();
-    //dibujaMapa(19.071984, -98.218453);
+    getGeo();
+    dibujaMapa(19.071984, -98.218453);
 });]]>
 		</script>
+	</xsl:template>
+
+	<xsl:template name="playRoom">
+		<section class="tm-welcome-section">
+			<div class="container tm-position-relative">
+				<div class="tm-lights-container">
+					<img src="img/light.png" alt="Light" class="light light-1"/>
+					<img src="img/light.png" alt="Light" class="light light-2"/>
+					<img src="img/light.png" alt="Light" class="light light-3"/>
+				</div>
+				<div class="row tm-welcome-content">
+					<h2 class="white-text tm-handwriting-font tm-welcome-header">
+						<img src="img/header-line.png" alt="Line" class="tm-header-line"/>
+						Play Room <img src="img/header-line.png" alt="Line" class="tm-header-line"/>
+					</h2>
+					<h2 class="gold-text tm-welcome-header-2">
+						<xsl:value-of select="Datos/NombreRestaurant"/>
+					</h2>
+					<p class="gray-text tm-welcome-description">
+						<text id="direccion" class="gold-text">
+							<![CDATA[Video, Audio, y Drag & Drop]]>
+						</text>
+
+						<div id="video">
+							<video width="100%" controls="true" poster="/img/wrc.jpg">
+								<source src="multimedia/wrc.mp4"></source>
+							</video>
+						</div>
+					</p>
+					<a href="#main" class="tm-more-button tm-more-button-welcome">Jugar</a>
+				</div>
+				<img src="img/table-set.png" alt="Table Set" class="tm-table-set img-responsive"/>
+			</div>
+		</section>
+		<div class="tm-main-section light-gray-bg">
+			<div class="container" id="main">
+				<section class="tm-section row">
+					<h2 class="col-lg-12 margin-bottom-30"><![CDATA[Drag & Drop]]></h2>
+					<div id="cuadro1" ondragenter="return enter(event)" ondragover="return over(event)" ondragleave="return leave(event)" ondrop="return drop(event)">
+						<div class="cuadradito" id="arrastrable1" draggable="true" ondragstart="start(event)" ondragend="end(event)"></div>
+						<div class="cuadradito" id="arrastrable2" draggable="true" ondragstart="start(event)" ondragend="end(event)"></div>
+						<div class="cuadradito" id="arrastrable3" draggable="true" ondragstart="start(event)" ondragend="end(event)"></div>
+					</div>
+					<div id="cuadro2" ondragenter="return enter(event)" ondragover="return over(event)" ondragleave="return leave(event)" ondrop="return drop(event)"></div>
+					<div id="cuadro3" ondragenter="return enter(event)" ondragover="return over(event)" ondragleave="return leave(event)" ondrop="return clonar(event)"></div>
+					<div id="papelera" ondragenter="return enter(event)" ondragover="return over(event)" ondragleave="return leave(event)" ondrop="return eliminar(event)"></div>
+				</section>
+				<section class="tm-section-row">
+					<h2 class="col-lg-12 margin-bottom-30">
+						Audio html5
+					</h2>
+					<div id="ContenedorAudio">
+						<div id="fotoAudio" style="width: 100%">
+							<img src="img/wrc2.jpg" width="100%">
+								
+							</img>
+							<audio controls="true" style="width: 100%">
+								<source src="/multimedia/audio.mp3"></source>
+							</audio>
+						</div>
+					</div>
+				</section>
+			</div>
+		</div>
 	</xsl:template>
 </xsl:stylesheet>

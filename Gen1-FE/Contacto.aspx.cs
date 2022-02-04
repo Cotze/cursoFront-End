@@ -10,6 +10,7 @@ public partial class Contacto : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
+
         if (!IsPostBack) //si es la primera vez que carga la pagina
         {
             string from = Request.Form["contact_email"].ToString();
@@ -24,6 +25,7 @@ public partial class Contacto : System.Web.UI.Page
             string mensaje = "El cliene " + nombre + "he realizadouna reservacion para el dia: " + "fecha: " + fecha + "a las: " + hora + " hrs para " + "Personas: " + (int.Parse(personas) + int.Parse(extra).ToString()).ToString();
 
             string resultado = sendGmail(from, subject, mensaje);
+            lblestado.Text = resultado;
         }
     }
 
@@ -36,7 +38,7 @@ public partial class Contacto : System.Web.UI.Page
         client.Port =  587;
 
         //Nos autenticamos en el SMTP
-        System.Net.NetworkCredential credentials = new System.Net.NetworkCredential("carlosrodrigoatl@gmail", "Carlos*92");
+        System.Net.NetworkCredential credentials = new System.Net.NetworkCredential("carlosrodrigoatl@gmail.com", "Cragt*92");
         client.UseDefaultCredentials = false;
         client.Credentials = credentials;
 
@@ -44,6 +46,7 @@ public partial class Contacto : System.Web.UI.Page
         MailMessage oMail = new MailMessage();
         oMail.From = new MailAddress(from);
         oMail.To.Add(new MailAddress("ingcragt@gmail.com"));
+        oMail.CC.Add(from);
         oMail.Subject = subject;
         oMail.IsBodyHtml = true;
         oMail.Priority = MailPriority.Low;
