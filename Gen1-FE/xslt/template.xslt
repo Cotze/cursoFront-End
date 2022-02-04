@@ -26,6 +26,9 @@
     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+				<script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>
+				<!-- jQuery -->
+
 			</head>
 			<body>
 				<div id="loader-wrapper">
@@ -77,7 +80,7 @@
 						<xsl:call-template name="Carta"></xsl:call-template>
 					</xsl:when>
 					<xsl:when test="$TipoMenu= 2">
-						<h1>Contenido de Contacto</h1>
+						<xsl:call-template name="Contacto"></xsl:call-template>
 					</xsl:when>
 					<xsl:when test="$TipoMenu= 3">
 						<h1>Contenido de Play Room</h1>
@@ -149,10 +152,9 @@
 					</div>
 				</footer>
 
-				<script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>
-				<!-- jQuery -->
 				<script type="text/javascript" src="js/templatemo-script.js"></script>
 				<!-- Templatemo Script -->
+
 			</body>
 		</html>
 	</xsl:template>
@@ -385,7 +387,7 @@
 									<ul>
 										<xsl:for-each select="Platillos/Tipo">
 											<li>
-												<a href="#" class="active">
+												<a class="tipomenu active" id="li{@Nombre}" data-identificador="{@Nombre}" style="cursor: pointer;">
 													<xsl:value-of select="@Nombre"/>
 												</a>
 											</li>
@@ -398,12 +400,14 @@
 							</div>
 						</div>
 
+						<!--Inicio del for-each de las tarjetas-->
 						<xsl:for-each select="Platillos/Tipo">
-							<div class="tm-menu-product-content col-lg-9 col-md-9">
+							<div class="tm-menu-product-content col-lg-9 col-md-9 contenedores" id="{@Nombre}">
 								<!-- menu content -->
+								<!--for-each anidado para las tarjetas-->
 								<xsl:for-each select="Platillo">
 									<div class="tm-product">
-										<img src="{Imagen}" alt="Product"/>
+										<img src="{Imagen}" alt="Product" class="imagenPlatillo"/>
 										<div class="tm-product-text">
 											<h3 class="tm-product-title">
 												<xsl:value-of select="@Nombre"/>
@@ -429,5 +433,132 @@
 				</section>
 			</div>
 		</div>
+		<script>
+			$(document).ready(function(){
+			$("#liDesayuno").addClass("active");
+			$(".contenedores").hide();
+			$("#Desayunos").show();
+			$(".tipomenu").click(function(){
+			$(".contenedores").hide();
+			var nombre = $(this).data("identificador");
+			$(".tipomenu").removeClass("active");
+			$(this).addClass("active");
+			$("#" + nombre).show();
+			});
+			});
+		</script>
+	</xsl:template>
+
+	<xsl:template name="Contacto">
+		<section class="tm-welcome-section">
+			<div class="container tm-position-relative">
+				<div class="tm-lights-container">
+					<img src="img/light.png" alt="Light" class="light light-1"/>
+					<img src="img/light.png" alt="Light" class="light light-2"/>
+					<img src="img/light.png" alt="Light" class="light light-3"/>
+				</div>
+				<div class="row tm-welcome-content">
+					<h2 class="white-text tm-handwriting-font tm-welcome-header">
+						<img src="img/header-line.png" alt="Line" class="tm-header-line"/>
+						Contactanos <img src="img/header-line.png" alt="Line" class="tm-header-line"/>
+					</h2>
+					<h2 class="gold-text tm-welcome-header-2">
+						<xsl:value-of select="Datos/NombreRestaurant"/>
+					</h2>
+					<p class="gray-text tm-welcome-description">
+						<text id="direccion" class="gold-text"></text>
+
+						<div id="street"></div>
+					</p>
+					<a href="#main" class="tm-more-button tm-more-button-welcome">Envianos un mensaje</a>
+				</div>
+				<img src="img/table-set.png" alt="Table Set" class="tm-table-set img-responsive"/>
+			</div>
+		</section>
+		<div class="tm-main-section light-gray-bg">
+			<div class="container" id="main">
+				<section class="tm-section row">
+					<h2 class="col-lg-12 margin-bottom-30">Formulario de reservacion</h2>
+					<form action="Contacto.aspx" method="post" class="tm-contact-form" oninput="total.value=contact_personas.valueAsNumber+contact_adicionales.valueAsNumber">
+						<div class="col-lg-6 col-md-6">
+							
+							<div class="form-group">
+								<labbel class="form-label">Nombre</labbel>
+								<input type="text" id="contact_name" name="contact_name" class="form-control" placeholder="Nombre" required="true" />
+							</div>
+							
+							<div class="form-group">
+								<labbel class="form-label">Correo</labbel>
+								<input type="email" id="contact_email" name="contact_email" class="form-control" placeholder="Correo electronico" required="true"/>
+							</div>
+							
+							<div class="form-group">
+								<labbel class="form-label">Número de personas</labbel>
+								<input type="number" id="contact_personas" name="contact_personas" class="form-control" required="true" max="8" min="1" value="1"/>
+							</div>
+							
+							<div class="form-group">
+								<labbel class="form-label">Personas adicionales</labbel>
+								<input type="number" id="contact_adicionales" name="contact_adicionales" class="form-control" max="4" min="0" value="0"/>
+							</div>
+							
+							<div class="form-group">
+								<labbel class="form-label">Fecha</labbel>
+								<input type="date" id="contact_fecha" name="contact_fecha" class="form-control" required="true" />
+							</div>
+							
+							<div class="form-group">
+								<labbel class="form-label">Hora</labbel>
+								<input type="time" id="contact_hora" name="contact_hora" class="form-control" required="true" max="19:00:00" min="08:00:00"/>
+							</div>
+							
+							<div class="form-group">
+								<labbel class="form-label">Total de personaes</labbel>
+								<output id="total" class="form-control">1</output>
+							</div>
+							
+							<div class="form-group">
+								<button class="tm-more-button" type="submit" name="submit">Hacer reservacion</button>
+							</div>
+							
+						</div>
+						<div class="col-lg-6 col-md-6">
+							<div id="google-map">
+								<div id="mapa"></div>
+							</div>
+						</div>
+					</form>
+				</section>
+			</div>
+		</div>
+		<script>
+			<![CDATA[$(document).ready(function(){
+    var timeControl = document.getElementById("contact_hora");
+    var now = new Date(Date.now());
+    var horas = now.getHours();
+    var minutos = now.getMinutes();
+    if( horas < 10){
+        horas = "0" + horas;
+    }
+    if( minutos < 10){
+        minutos = "0" + minutos;
+    }
+    var formatted = horas + ":" + minutos; //09:03
+    // timeControl.value = formatted;
+    // $("#contact_hora").val(formatted);
+    $("#contact_hora").attr("value",formatted);	
+    $("#contact_hora").attr("min",formatted);	
+    var dd = now.getDate();
+    var mm = now.getMonth()+1;
+    var yyyy = now.getFullYear();
+    if(dd<10){dd='0'+dd;}
+    if(mm<10){mm='0'+mm;}
+    var today = yyyy + '-' + mm + '-' + dd; //2022-01-03
+    $("#contact_fecha").attr("min",today);
+    $("#contact_fecha").val(today);
+    //getGeo();
+    //dibujaMapa(19.071984, -98.218453);
+});]]>
+		</script>
 	</xsl:template>
 </xsl:stylesheet>
