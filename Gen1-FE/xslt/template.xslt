@@ -267,7 +267,6 @@
 									</div>
 								</div>
 							</xsl:for-each>
-
 						</div>
 						<div class="tm-special-container-right">
 							<!-- right -->
@@ -289,24 +288,27 @@
 										</div>
 									</div>
 								</xsl:for-each>
-
 							</div>
-							<xsl:for-each select="Platillos/Tipo[@Nombre='Comidas']/Platillo[@Especialidad='SI']/Ingredientes/Ingrediente[position()>1]">
-								<div class="tm-special-container-lower">
-									<div class="tm-special-item">
-										<div class="tm-special-img-container">
-											<img src="{@Imagen}" alt="Special" class="img-responsive"/>
-											<a href="#">
-												<div class="tm-special-description">
-													<p>
-														<xsl:value-of select="@Nombre"/>
-													</p>
-												</div>
-											</a>
+							<!--left-->
+							<div class="col-lg-12 tm-special-container margin-top-28">
+								<xsl:for-each select="Platillos/Tipo[@Nombre='Comidas']/Platillo[@Especialidad='SI']/Ingredientes/Ingrediente[position()>1]">
+									<div class="tm-special-container-lower">
+										<div class="tm-special-item">
+											<div class="tm-special-img-container">
+												<img src="{@Imagen}" alt="Special" class="img-responsive"/>
+												<a href="#">
+													<div class="tm-special-description">
+														<p>
+															<xsl:value-of select="@Nombre"/>
+														</p>
+													</div>
+												</a>
+											</div>
 										</div>
 									</div>
-								</div>
-							</xsl:for-each>
+								</xsl:for-each>
+							</div>
+
 						</div>
 					</div>
 				</section>
@@ -344,7 +346,6 @@
 			</div>
 		</div>
 	</xsl:template>
-
 	<xsl:template name="Carta">
 		<section class="tm-welcome-section">
 			<div class="container tm-position-relative">
