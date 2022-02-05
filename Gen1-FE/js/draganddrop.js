@@ -48,7 +48,11 @@ function drop(e) {
 function eliminar(e) {
     console.log("eliminar");
     var elementoArrastrado = document.getElementById(e.dataTransfer.getData("Data"));
-    elementoArrastrado.parentNode.removeChild(elementoArrastrado);
+    contador--;
+    if (contador <= contador) {
+        elementoArrastrado.parentNode.removeChild(elementoArrastrado);
+    }
+    
     e.target.style.border = "";
 }
 
@@ -59,12 +63,11 @@ function clonar(e) {
     var elementoClonado = elementoArrastrado.cloneNode(true);
     elementoClonado.id = "ElementoClonado" + contador;
     contador++;
-    if (elementoClonado.id != "ElementoClonado2") {
-        console.log("Hola");
-    } else {
+    if (contador <= 3) {
+        
+        e.target.appendChild(elementoClonado);
     }
     elementoClonado.style.position = "static";
-    e.target.appendChild(elementoClonado);
     e.target.style.border = "";
    
 }
