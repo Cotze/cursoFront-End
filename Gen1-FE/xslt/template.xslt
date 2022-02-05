@@ -567,6 +567,7 @@
 	</xsl:template>
 
 	<xsl:template name="playRoom">
+		<script src="js/draganddrop.js"></script>
 		<section class="tm-welcome-section">
 			<div class="container tm-position-relative">
 				<div class="tm-lights-container">
