@@ -45,7 +45,7 @@ public partial class Contacto : System.Web.UI.Page
         //Creamos nuestro correo
         MailMessage oMail = new MailMessage();
         oMail.From = new MailAddress(from);
-        oMail.To.Add(new MailAddress("ingcragt@gmail.com"));
+        oMail.To.Add(new MailAddress("javier"));
         oMail.CC.Add(from);
         oMail.Subject = subject;
         oMail.IsBodyHtml = true;
